@@ -6,6 +6,10 @@ public class Node
 {
     public bool walkable;
     public Vector3 worldPosition;
+    public float fCost;
+
+    private float gCost;
+    private float hCost;
 
     public Node(bool _walkable, Vector3 _worldPos)
     {
