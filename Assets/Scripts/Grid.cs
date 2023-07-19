@@ -13,6 +13,15 @@ public class Grid : MonoBehaviour
     float nodeDiameter;
     int gridSizeX, gridSizeY, gridSizeZ;
 
+    private List<Node> openNodes;
+    private List<Node> closedNodes;
+
+    public Transform startingPoint;
+    public Transform endingPoint;
+
+    private Node startingNode;
+    private Node endingNode;
+
     private void Start()
     {
         nodeDiameter = nodeRadius * 2;
@@ -21,6 +30,7 @@ public class Grid : MonoBehaviour
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
 
         CreateGrid();
+        CalculatePath();
     }
 
     private void CreateGrid()
@@ -36,7 +46,7 @@ public class Grid : MonoBehaviour
                 {
                     Vector3 gridPoint = gridBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (z * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                     bool walkable = !(Physics.CheckSphere(gridPoint, nodeRadius, unwalkableMask));
-                    grid[x, y, z] = new Node(walkable, gridPoint);
+                    grid[x, y, z] = new Node(walkable, gridPoint, x, y, z);
                 }
             }
         }
@@ -75,6 +85,60 @@ public class Grid : MonoBehaviour
                 }
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
             }
+        }
+    }
+
+    public List<Node> GetNeighbors(Node node)
+    {
+        List<Node> neighbors = new List<Node>();
+
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int z = -1; z <= 1; z++)
+                {
+                    if(x == 0 && y == 0 && z == 0)
+                    {
+                        continue;
+                    }
+
+                    int checkX = node.gridX + x;
+                    int checkY = node.gridY + y;
+                    int checkZ = node.gridZ + z;
+
+                    if (checkX >= 0 && checkX < gridSizeX && checkY >= 0 && checkY < gridSizeY && checkZ >= 0 && checkZ < gridSizeZ)
+                    {
+                        neighbors.Add(grid[checkX, checkY, checkZ]);
+                    }
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
+    public void CalculatePath()
+    {
+        openNodes = new List<Node>();
+        closedNodes = new List<Node>();
+
+        startingNode = NodeFromWorldPosition(startingPoint.position);
+        endingNode = NodeFromWorldPosition(endingPoint.position);
+
+        //foreach(Node n in grid)
+        //{
+        //    if(!n.walkable)
+        //    {
+        //        n.isOpen = false;
+        //    }
+        //}
+
+        List<Node> theNodeList = GetNeighbors(startingNode);
+
+        foreach(Node node in theNodeList)
+        {
+            Debug.Log("Hello");
         }
     }
 }
