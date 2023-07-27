@@ -212,7 +212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208556897}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.13, y: -13.869, z: -13.574}
+  m_LocalPosition: {x: -9.52, y: -12.69, z: -11.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -419,6 +419,7 @@ GameObject:
   m_Component:
   - component: {fileID: 555520919}
   - component: {fileID: 555520918}
+  - component: {fileID: 555520920}
   m_Layer: 0
   m_Name: A*
   m_TagString: Untagged
@@ -438,14 +439,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ffb2a5cc1363714f8071f711da0c213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 546564164}
+  startingPoint: {fileID: 208556897}
+  endingPoint: {fileID: 1744093809}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 64
   gridWorldSize: {x: 30, y: 30, z: 30}
   nodeRadius: 0.5
-  startingPoint: {fileID: 208556901}
-  endingPoint: {fileID: 1744093813}
 --- !u!4 &555520919
 Transform:
   m_ObjectHideFlags: 0
@@ -460,6 +460,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555520920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555520917}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a544f6e3e00ccf544bf4f2e20ea9dc75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridScript: {fileID: 555520918}
+  traversalObject: {fileID: 546564164}
+  moveSpeed: 10
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

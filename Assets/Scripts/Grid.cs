@@ -4,23 +4,19 @@ using UnityEngine;
 
 public class Grid : MonoBehaviour
 {
-    public GameObject startPoint;
+    //public GameObject startPoint;
+    public GameObject startingPoint;
+    public GameObject endingPoint;
     public LayerMask unwalkableMask;
     public Vector3 gridWorldSize;
     public float nodeRadius;
-    Node[,,] grid;
+    public Node[,,] grid;
+
+    public Node startingNode;
+    public Node endingNode;
 
     float nodeDiameter;
     int gridSizeX, gridSizeY, gridSizeZ;
-
-    private List<Node> openNodes;
-    private List<Node> closedNodes;
-
-    public Transform startingPoint;
-    public Transform endingPoint;
-
-    private Node startingNode;
-    private Node endingNode;
 
     private void Start()
     {
@@ -30,7 +26,10 @@ public class Grid : MonoBehaviour
         gridSizeZ = Mathf.RoundToInt(gridWorldSize.z / nodeDiameter);
 
         CreateGrid();
-        CalculatePath();
+        startingNode = NodeFromWorldPosition(startingPoint.transform.position);
+        endingNode = NodeFromWorldPosition(endingPoint.transform.position);
+
+        //Debug.Log(startingNode);
     }
 
     private void CreateGrid()
@@ -74,15 +73,15 @@ public class Grid : MonoBehaviour
 
         if(grid != null)
         {
-            Node playerNode = NodeFromWorldPosition(startPoint.transform.position);
+            //Node playerNode = NodeFromWorldPosition(startPoint.transform.position);
 
             foreach (Node n in grid)
             {
                 Gizmos.color = (n.walkable ? Color.green : Color.red);
-                if (playerNode == n) 
-                {
-                    Gizmos.color = Color.blue; 
-                }
+                //if (playerNode == n) 
+                //{
+                //    Gizmos.color = Color.blue; 
+                //}
                 Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
             }
         }
@@ -116,29 +115,5 @@ public class Grid : MonoBehaviour
         }
 
         return neighbors;
-    }
-
-    public void CalculatePath()
-    {
-        openNodes = new List<Node>();
-        closedNodes = new List<Node>();
-
-        startingNode = NodeFromWorldPosition(startingPoint.position);
-        endingNode = NodeFromWorldPosition(endingPoint.position);
-
-        //foreach(Node n in grid)
-        //{
-        //    if(!n.walkable)
-        //    {
-        //        n.isOpen = false;
-        //    }
-        //}
-
-        List<Node> theNodeList = GetNeighbors(startingNode);
-
-        foreach(Node node in theNodeList)
-        {
-            Debug.Log("Hello");
-        }
     }
 }

@@ -8,12 +8,12 @@ public class Node
     public bool isOpen = true;
     public Vector3 worldPosition;
     public float fCost;
+    public float gCost;
+    public float hCost;
     public int gridX;
     public int gridY;
     public int gridZ;
-
-    private float gCost;
-    private float hCost;
+    public Node parentNode;
 
     public Node(bool _walkable, Vector3 _worldPos, int _gridX, int _gridY, int _gridZ)
     {
