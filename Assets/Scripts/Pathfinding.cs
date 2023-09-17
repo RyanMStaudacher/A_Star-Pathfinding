@@ -9,7 +9,9 @@ public class Pathfinding : MonoBehaviour
     public Grid gridScript;
     public GameObject traversalObject;
     public float moveSpeed = 10f;
-    public bool traversePath = false;
+
+    [HideInInspector]
+    public bool startCalculations = false;
 
     private List<Node> openNodes;
     private List<Node> pathNodes;
@@ -18,6 +20,7 @@ public class Pathfinding : MonoBehaviour
     private Node currentNode;
     private Node traversalTarget;
     private bool hasTraversedPath = false;
+    //private bool traversePath = false;
     private bool targetReached = false;
     private int targetIndex = 0;
 
@@ -38,13 +41,16 @@ public class Pathfinding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!targetReached)
+        if(startCalculations)
         {
-            CalculatePath();
-        }
-        else if (targetReached)
-        {
-            TraversePath();
+            if (!targetReached)
+            {
+                CalculatePath();
+            }
+            else if (targetReached)
+            {
+                TraversePath();
+            }
         }
     }
 
@@ -115,5 +121,10 @@ public class Pathfinding : MonoBehaviour
         {
             traversalObject.transform.position = Vector3.MoveTowards(traversalObject.transform.position, traversalTarget.worldPosition, moveSpeed * Time.deltaTime);
         }
+    }
+
+    public void ClickStart()
+    {
+        startCalculations = true;
     }
 }
